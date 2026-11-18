@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Nos applications seront ajoutées ici à partir de l'étape 1b.
+        # Nos applications
+    "comptes",
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,8 @@ DATABASES = {
     )
 }
 
+# Modèle utilisateur personnalisé : à définir AVANT la première migration.
+AUTH_USER_MODEL = "comptes.Utilisateur"
 
 # --- Mots de passe ----------------------------------------------------------
 
