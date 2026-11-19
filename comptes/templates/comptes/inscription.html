@@ -3,31 +3,38 @@
 {% block titre %}Créer un compte — Gestion Entrepreneurs{% endblock %}
 
 {% block contenu %}
-<div class="relative isolate mx-auto max-w-md">
-  <div class="pointer-events-none absolute -top-10 -right-12 -z-10 size-56 rounded-full bg-soleil-300/50 blur-3xl animate-flotte" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute -bottom-10 -left-12 -z-10 size-56 rounded-full bg-marque-300/40 blur-3xl animate-flotte [animation-delay:-6s]" aria-hidden="true"></div>
+<div class="carte mx-auto grid max-w-5xl animate-apparition overflow-hidden lg:grid-cols-[1fr_1.1fr]">
 
-  <div class="carte animate-apparition overflow-hidden">
-    <div class="h-1.5 bg-linear-to-r from-soleil-400 via-marque-400 to-marque-600"></div>
-
-    <div class="p-6 sm:p-8">
-      <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200">
-        Gratuit · Sans carte bancaire
-      </span>
-      <h1 class="mt-3 text-2xl font-extrabold text-slate-900">Créer votre compte</h1>
-      <p class="mt-1 text-sm text-slate-600">Vous créerez votre entreprise juste après.</p>
-
-      <form method="post" class="mt-6 space-y-5">
-        {% csrf_token %}
-        {% include "comptes/_champs.html" %}
-        <button type="submit" class="bouton-principal w-full">Créer mon compte</button>
-      </form>
-
-      <p class="mt-6 text-center text-sm text-slate-600">
-        Déjà inscrit ?
-        <a href="{% url 'comptes:connexion' %}" class="font-semibold text-marque-700 underline-offset-4 hover:underline">Se connecter</a>
+  <aside class="relative isolate hidden flex-col justify-between bg-encre-950 p-10 pl-14 text-encre-200 lg:flex">
+    <div class="fond-registre-sombre pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+    <p class="etiquette text-cuivre-300">Gestion Entrepreneurs</p>
+    <div>
+      <p class="font-display text-3xl leading-snug text-white">
+        Trois minutes pour démarrer. Aucune carte bancaire.
       </p>
+      <ol class="mt-8 space-y-4 text-sm">
+        <li class="flex gap-3"><span class="font-display text-cuivre-300">01</span>Créez votre compte</li>
+        <li class="flex gap-3"><span class="font-display text-cuivre-300">02</span>Enregistrez votre entreprise</li>
+        <li class="flex gap-3"><span class="font-display text-cuivre-300">03</span>Ajoutez vos produits et vendez</li>
+      </ol>
     </div>
+    <p class="text-xs text-encre-400">Kinshasa · République démocratique du Congo</p>
+  </aside>
+
+  <div class="p-6 sm:p-10">
+    <h1 class="font-display text-3xl tracking-tight text-encre-950">Créer votre compte</h1>
+    <p class="mt-2 text-sm text-encre-600">Gratuit, sans engagement. Vous créerez votre entreprise juste après.</p>
+
+    <form method="post" class="mt-8 space-y-5">
+      {% csrf_token %}
+      {% include "comptes/_champs.html" %}
+      <button type="submit" class="bouton-principal w-full py-3">Créer mon compte</button>
+    </form>
+
+    <p class="mt-8 text-sm text-encre-600">
+      Déjà inscrit ?
+      <a href="{% url 'comptes:connexion' %}" class="font-medium text-encre-950 underline decoration-cuivre-400 decoration-1 underline-offset-4 hover:decoration-2">Se connecter</a>
+    </p>
   </div>
 </div>
 {% endblock %}

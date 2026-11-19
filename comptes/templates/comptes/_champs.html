@@ -1,8 +1,8 @@
 {# Erreurs générales puis chaque champ avec libellé, aide et erreurs. #}
 {# Le « _ » au début du nom signale un morceau de template, inclus dans d'autres pages. #}
 {% for erreur in form.non_field_errors %}
-  <div role="alert" class="flex animate-apparition items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 size-5 shrink-0" aria-hidden="true">
+  <div role="alert" class="flex items-start gap-3 rounded-lg bg-rose-50 px-4 py-3 text-sm text-rose-800 ring-1 ring-rose-200">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 size-4 shrink-0" aria-hidden="true">
       <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
     </svg>
     <p>{{ erreur }}</p>
@@ -11,18 +11,18 @@
 
 {% for champ in form %}
   <div>
-    <label for="{{ champ.id_for_label }}" class="block text-sm font-semibold text-slate-700">
+    <label for="{{ champ.id_for_label }}" class="block text-sm font-medium text-encre-900">
       {{ champ.label }}
     </label>
     {{ champ }}
     {% if champ.help_text %}
       {# Les règles de mot de passe de Django sont une liste <ul> : on lui remet des puces #}
-      <div class="mt-1.5 text-xs leading-relaxed text-slate-500 [&_li]:mt-0.5 [&_ul]:list-disc [&_ul]:pl-4">
+      <div class="mt-1.5 text-xs leading-relaxed text-encre-500 [&_li]:mt-0.5 [&_ul]:list-disc [&_ul]:pl-4">
         {{ champ.help_text }}
       </div>
     {% endif %}
     {% for erreur in champ.errors %}
-      <p class="mt-1.5 text-sm font-medium text-rose-700">• {{ erreur }}</p>
+      <p class="mt-1.5 text-sm text-rose-700">{{ erreur }}</p>
     {% endfor %}
   </div>
 {% endfor %}
