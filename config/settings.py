@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "tableau_de_bord",
     "entreprises",
     "stock",
+    "ventes",
 ]
 
 MIDDLEWARE = [
