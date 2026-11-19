@@ -1,0 +1,4 @@
+/* Fichier source Tailwind : compilé vers static/css/app.css.
+   Tailwind v4 détecte automatiquement les classes utilisées dans les templates
+   (en ignorant ce qui est dans .gitignore, comme .venv). */
+@import "tailwindcss";
