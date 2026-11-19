@@ -1,0 +1,5 @@
+/* Fichier source Tailwind : compilé vers static/css/app.css.
+   Il est volontairement HORS de static/ : collectstatic ne doit pas le traiter.
+   source("../") indique de scanner tout le projet à partir de la racine
+   (en ignorant ce qui est dans .gitignore, comme .venv). */
+@import "tailwindcss" source("../");
