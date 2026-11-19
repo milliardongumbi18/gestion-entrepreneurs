@@ -23,6 +23,11 @@ class AccueilTests(TestCase):
         self.assertContains(reponse, 'name="viewport"')
         self.assertContains(reponse, "css/app.css")
 
+    def test_bouton_de_theme_present(self):
+        reponse = self.client.get(self.url)
+        self.assertContains(reponse, 'id="bascule-theme"')
+        self.assertContains(reponse, "js/theme.js")
+
     def test_visiteur_voit_l_appel_a_l_inscription(self):
         reponse = self.client.get(self.url)
         self.assertContains(reponse, "Commencer gratuitement")

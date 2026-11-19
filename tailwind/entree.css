@@ -2,8 +2,12 @@
    Il est volontairement HORS de static/ : collectstatic ne doit pas le traiter. */
 @import "tailwindcss" source("../");
 
+/* La variante « dark: » dépend de la classe .dark posée sur <html> par notre script,
+   et non plus seulement du réglage du système. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ------------------------------------------------------------------
-   1. Identité « Encre & Cuivre »
+   1. Identité « Encre & Cuivre » (thème clair)
    ------------------------------------------------------------------ */
 @theme {
   /* Texte : police du système (Inter si elle est installée). Zéro téléchargement. */
@@ -52,7 +56,54 @@
 }
 
 /* ------------------------------------------------------------------
-   2. Composants réutilisables
+   2. Thème sombre : on redéfinit les MÊMES variables.
+   L'échelle d'encre est inversée (950 devient clair, 50 devient foncé),
+   « white » devient la couleur des cartes, « papier » le fond de nuit.
+   ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    --ligne-registre: rgb(20 32 51 / 0.07);
+    --ligne-registre-inverse: rgb(255 255 255 / 0.06);
+  }
+
+  .dark {
+    color-scheme: dark; /* barres de défilement et champs natifs en version sombre */
+
+    --color-papier: #0a111d;
+    --color-white: #121b2b;
+
+    --color-encre-50: #0f1726;
+    --color-encre-100: #1a2436;
+    --color-encre-200: #2a364b;
+    --color-encre-300: #3d4a61;
+    --color-encre-400: #5c6b84;
+    --color-encre-500: #8291a8;
+    --color-encre-600: #a5b2c4;
+    --color-encre-700: #c3ccd9;
+    --color-encre-800: #dbe1ea;
+    --color-encre-900: #e9edf3;
+    --color-encre-950: #f6f8fb;
+
+    /* Cuivre ajusté pour rester lisible sur fond sombre */
+    --color-cuivre-50: #2a1d14;
+    --color-cuivre-200: #5a3a22;
+    --color-cuivre-300: #a8693b;
+    --color-cuivre-600: #d6a273;
+
+    /* Couleurs d'état adaptées au fond sombre */
+    --color-emerald-700: #34d399;
+    --color-rose-50: #3b1219;
+    --color-rose-200: #7f1d2d;
+    --color-rose-700: #fda4af;
+    --color-rose-800: #fecdd3;
+
+    --ligne-registre: rgb(255 255 255 / 0.05);
+    --ligne-registre-inverse: rgb(11 20 36 / 0.08);
+  }
+}
+
+/* ------------------------------------------------------------------
+   3. Composants réutilisables
    ------------------------------------------------------------------ */
 @utility bouton-principal {
   @apply inline-flex items-center justify-center gap-2 rounded-lg bg-encre-900 px-4 py-2.5
@@ -94,11 +145,11 @@
   background-image: repeating-linear-gradient(
     to bottom,
     transparent 0, transparent 2.5rem,
-    rgb(20 32 51 / 0.07) 2.5rem, rgb(20 32 51 / 0.07) calc(2.5rem + 1px)
+    var(--ligne-registre) 2.5rem, var(--ligne-registre) calc(2.5rem + 1px)
   );
 }
 
-/* Version sombre : lignes claires + marge verticale cuivre */
+/* Version « panneau » : lignes + marge verticale cuivre */
 @utility fond-registre-sombre {
   background-image:
     linear-gradient(
@@ -110,12 +161,12 @@
     repeating-linear-gradient(
       to bottom,
       transparent 0, transparent 2.5rem,
-      rgb(255 255 255 / 0.06) 2.5rem, rgb(255 255 255 / 0.06) calc(2.5rem + 1px)
+      var(--ligne-registre-inverse) 2.5rem, var(--ligne-registre-inverse) calc(2.5rem + 1px)
     );
 }
 
 /* ------------------------------------------------------------------
-   3. Accessibilité : animations coupées si le téléphone le demande
+   4. Accessibilité : animations coupées si le téléphone le demande
    ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
