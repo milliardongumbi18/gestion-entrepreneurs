@@ -80,6 +80,8 @@ class Entreprise(models.Model):
         validators=[MinValueValidator(Decimal("0.01"))],
         help_text="Combien de francs congolais pour 1 dollar, aujourd'hui.",
     )
+        # Compteur des numéros de vente (V-2026-00042), incrémenté sous verrou par enregistrer_vente().
+    dernier_numero_vente = models.PositiveIntegerField("dernier numéro de vente", default=0, editable=False)
     cree_le = models.DateTimeField("créée le", auto_now_add=True)
     modifie_le = models.DateTimeField("modifiée le", auto_now=True)
 
