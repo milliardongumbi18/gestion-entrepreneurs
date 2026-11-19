@@ -3,44 +3,47 @@
 @import "tailwindcss" source("../");
 
 /* ------------------------------------------------------------------
-   1. Identité visuelle (« design tokens »)
-   Chaque variable --color-xxx crée les classes bg-xxx, text-xxx, etc.
+   1. Identité « Encre & Cuivre »
    ------------------------------------------------------------------ */
 @theme {
-  /* Polices du système : zéro octet à télécharger */
-  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Texte : police du système (Inter si elle est installée). Zéro téléchargement. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Titres : serif élégante déjà présente sur Windows, Mac et Android */
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
 
-  /* Bleu Congo : couleur principale (confiance, sérieux) */
-  --color-marque-50: #eef4ff;
-  --color-marque-100: #dbe6ff;
-  --color-marque-200: #bcd0ff;
-  --color-marque-300: #8eb0ff;
-  --color-marque-400: #5a85fb;
-  --color-marque-500: #335ff2;
-  --color-marque-600: #1f43dc;
-  --color-marque-700: #1a35b2;
-  --color-marque-800: #1b308c;
-  --color-marque-900: #1b2d6f;
-  --color-marque-950: #121b43;
+  /* Fond « papier » : un blanc cassé chaud, plus reposant que le blanc pur */
+  --color-papier: #faf9f6;
 
-  /* Jaune soleil : accent (énergie, l'argent qui rentre) */
-  --color-soleil-300: #ffe08a;
-  --color-soleil-400: #ffcf4a;
-  --color-soleil-500: #f5b70a;
-  --color-soleil-600: #d99400;
+  /* Encre : couleur principale, un bleu nuit presque noir */
+  --color-encre-50: #f4f6f9;
+  --color-encre-100: #e6eaf0;
+  --color-encre-200: #cbd3df;
+  --color-encre-300: #a3b0c3;
+  --color-encre-400: #7486a0;
+  --color-encre-500: #536681;
+  --color-encre-600: #3f5069;
+  --color-encre-700: #2f3d53;
+  --color-encre-800: #1f2a3c;
+  --color-encre-900: #142033;
+  --color-encre-950: #0b1424;
 
-  /* Animations : uniquement transform et opacity (fluides même sur un petit téléphone) */
-  --animate-apparition: apparition 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-flotte: flotte 14s ease-in-out infinite;
-  --animate-pousse: pousse 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* Cuivre : accent discret (clin d'œil au cuivre du Katanga) */
+  --color-cuivre-50: #fbf6f1;
+  --color-cuivre-100: #f3e6d8;
+  --color-cuivre-200: #e6cbb0;
+  --color-cuivre-300: #d4a97f;
+  --color-cuivre-400: #c28a5a;
+  --color-cuivre-500: #b07040;
+  --color-cuivre-600: #935a33;
+  --color-cuivre-700: #74462a;
+
+  /* Animations discrètes : un léger glissement, pas de spectacle */
+  --animate-apparition: apparition 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-pousse: pousse 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 
   @keyframes apparition {
-    from { opacity: 0; transform: translateY(18px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes flotte {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50%      { transform: translate(28px, -22px) scale(1.1); }
   }
   @keyframes pousse {
     from { transform: scaleY(0); }
@@ -49,41 +52,70 @@
 }
 
 /* ------------------------------------------------------------------
-   2. Composants réutilisables : une seule définition, utilisée partout
+   2. Composants réutilisables
    ------------------------------------------------------------------ */
 @utility bouton-principal {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-marque-600 px-5 py-3
-         font-semibold text-white shadow-lg shadow-marque-600/25 transition duration-200
-         hover:-translate-y-0.5 hover:bg-marque-700 hover:shadow-xl hover:shadow-marque-600/30
-         active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-marque-300;
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-encre-900 px-4 py-2.5
+         text-sm font-medium text-white shadow-sm ring-1 ring-encre-900 transition duration-150
+         hover:bg-encre-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cuivre-300/50;
 }
 
-@utility bouton-soleil {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-soleil-400 px-6 py-3.5
-         font-semibold text-marque-950 shadow-lg shadow-soleil-500/30 transition duration-200
-         hover:-translate-y-0.5 hover:bg-soleil-300 hover:shadow-xl
-         active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-soleil-300/60;
+@utility bouton-secondaire {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5
+         text-sm font-medium text-encre-900 shadow-sm ring-1 ring-encre-900/15 transition duration-150
+         hover:bg-encre-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cuivre-300/50;
 }
 
 @utility bouton-discret {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl px-3.5 py-2 font-semibold
-         text-slate-700 transition duration-200 hover:bg-slate-100 hover:text-marque-700
-         focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-marque-200;
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium
+         text-encre-600 transition duration-150 hover:bg-encre-900/5 hover:text-encre-950
+         focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cuivre-300/50;
 }
 
 @utility champ {
-  @apply mt-1.5 block w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base
-         text-slate-900 shadow-sm transition duration-200 placeholder:text-slate-400
-         hover:border-slate-400 focus:border-marque-500 focus:outline-none focus:ring-4 focus:ring-marque-500/15;
+  @apply mt-1.5 block w-full rounded-lg border border-encre-900/15 bg-white px-3.5 py-2.5
+         text-base text-encre-950 shadow-xs transition duration-150 placeholder:text-encre-300
+         hover:border-encre-900/25 focus:border-encre-700 focus:outline-none focus:ring-4 focus:ring-cuivre-400/15;
 }
 
+/* Carte : bordure fine + ombre en deux couches (proche + diffuse) */
 @utility carte {
-  @apply rounded-3xl bg-white shadow-xl shadow-marque-900/5 ring-1 ring-slate-200/80;
+  @apply rounded-2xl bg-white ring-1 ring-encre-900/[0.08]
+         shadow-[0_1px_2px_rgb(11_20_36/0.04),0_12px_32px_-16px_rgb(11_20_36/0.18)];
+}
+
+/* Petit sur-titre en capitales espacées */
+@utility etiquette {
+  @apply text-xs font-semibold uppercase tracking-[0.14em];
+}
+
+/* Motif « registre comptable » : lignes horizontales très fines */
+@utility fond-registre {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0, transparent 2.5rem,
+    rgb(20 32 51 / 0.07) 2.5rem, rgb(20 32 51 / 0.07) calc(2.5rem + 1px)
+  );
+}
+
+/* Version sombre : lignes claires + marge verticale cuivre */
+@utility fond-registre-sombre {
+  background-image:
+    linear-gradient(
+      to right,
+      transparent 0, transparent 1.75rem,
+      rgb(194 138 90 / 0.5) 1.75rem, rgb(194 138 90 / 0.5) calc(1.75rem + 1px),
+      transparent calc(1.75rem + 1px)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0, transparent 2.5rem,
+      rgb(255 255 255 / 0.06) 2.5rem, rgb(255 255 255 / 0.06) calc(2.5rem + 1px)
+    );
 }
 
 /* ------------------------------------------------------------------
-   3. Accessibilité : si l'utilisateur a demandé à son téléphone de
-   réduire les animations, on les coupe toutes.
+   3. Accessibilité : animations coupées si le téléphone le demande
    ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

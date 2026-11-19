@@ -3,31 +3,42 @@
 {% block titre %}Connexion — Gestion Entrepreneurs{% endblock %}
 
 {% block contenu %}
-<div class="relative isolate mx-auto max-w-md">
-  <div class="pointer-events-none absolute -top-10 -left-12 -z-10 size-56 rounded-full bg-marque-300/40 blur-3xl animate-flotte" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute -right-12 -bottom-10 -z-10 size-56 rounded-full bg-soleil-300/50 blur-3xl animate-flotte [animation-delay:-6s]" aria-hidden="true"></div>
+<div class="carte mx-auto grid max-w-5xl animate-apparition overflow-hidden lg:grid-cols-[1fr_1.1fr]">
 
-  <div class="carte animate-apparition overflow-hidden">
-    {# Fine bande dégradée aux couleurs de la marque #}
-    <div class="h-1.5 bg-linear-to-r from-marque-600 via-marque-400 to-soleil-400"></div>
-
-    <div class="p-6 sm:p-8">
-      <h1 class="text-2xl font-extrabold text-slate-900">Bon retour 👋</h1>
-      <p class="mt-1 text-sm text-slate-600">Connectez-vous pour retrouver votre commerce.</p>
-
-      <form method="post" class="mt-6 space-y-5">
-        {% csrf_token %}
-        {% include "comptes/_champs.html" %}
-        {# Page demandée avant la connexion : Django vérifie qu'elle reste sur notre site #}
-        <input type="hidden" name="next" value="{{ next }}">
-        <button type="submit" class="bouton-principal w-full">Se connecter</button>
-      </form>
-
-      <p class="mt-6 text-center text-sm text-slate-600">
-        Pas encore de compte ?
-        <a href="{% url 'comptes:inscription' %}" class="font-semibold text-marque-700 underline-offset-4 hover:underline">Créer un compte</a>
+  {# Panneau de gauche (grand écran uniquement) #}
+  <aside class="relative isolate hidden flex-col justify-between bg-encre-950 p-10 pl-14 text-encre-200 lg:flex">
+    <div class="fond-registre-sombre pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+    <p class="etiquette text-cuivre-300">Gestion Entrepreneurs</p>
+    <div>
+      <p class="font-display text-3xl leading-snug text-white">
+        Chaque vente notée est une décision mieux informée.
       </p>
+      <ul class="mt-8 space-y-3 text-sm">
+        <li class="flex items-center gap-3"><span class="h-px w-4 bg-cuivre-400"></span>Stock et ventes en temps réel</li>
+        <li class="flex items-center gap-3"><span class="h-px w-4 bg-cuivre-400"></span>CDF et USD dans un seul tableau</li>
+        <li class="flex items-center gap-3"><span class="h-px w-4 bg-cuivre-400"></span>Vos données isolées et protégées</li>
+      </ul>
     </div>
+    <p class="text-xs text-encre-400">Kinshasa · République démocratique du Congo</p>
+  </aside>
+
+  {# Formulaire #}
+  <div class="p-6 sm:p-10">
+    <h1 class="font-display text-3xl tracking-tight text-encre-950">Connexion</h1>
+    <p class="mt-2 text-sm text-encre-600">Heureux de vous revoir. Accédez à votre commerce.</p>
+
+    <form method="post" class="mt-8 space-y-5">
+      {% csrf_token %}
+      {% include "comptes/_champs.html" %}
+      {# Page demandée avant la connexion : Django vérifie qu'elle reste sur notre site #}
+      <input type="hidden" name="next" value="{{ next }}">
+      <button type="submit" class="bouton-principal w-full py-3">Se connecter</button>
+    </form>
+
+    <p class="mt-8 text-sm text-encre-600">
+      Pas encore de compte ?
+      <a href="{% url 'comptes:inscription' %}" class="font-medium text-encre-950 underline decoration-cuivre-400 decoration-1 underline-offset-4 hover:decoration-2">Créer un compte</a>
+    </p>
   </div>
 </div>
 {% endblock %}
