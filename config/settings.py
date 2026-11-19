@@ -47,6 +47,7 @@ INSTALLED_APPS = [
         # Nos applications
     "comptes",
     "tableau_de_bord",
+    "entreprises",
 ]
 
 MIDDLEWARE = [
