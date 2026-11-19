@@ -95,6 +95,11 @@ DATABASES = {
 # Modèle utilisateur personnalisé : à définir AVANT la première migration.
 AUTH_USER_MODEL = "comptes.Utilisateur"
 
+# Redirections de l'authentification (noms d'URL)
+LOGIN_URL = "comptes:connexion"
+LOGIN_REDIRECT_URL = "tableau_de_bord:accueil"
+LOGOUT_REDIRECT_URL = "tableau_de_bord:accueil"
+
 # --- Mots de passe ----------------------------------------------------------
 
 AUTH_PASSWORD_VALIDATORS = [
