@@ -1,20 +1,28 @@
 # ÉTAT DU PROJET — Gestion Entrepreneurs
 
-_Dernière mise à jour : 18 novembre 2026_
+_Dernière mise à jour : 19 novembre 2026_
 
 ## Où on en est
 - [x] Schéma des modèles validé
-- [ ] **1a — Création du projet + GitHub** ← en cours
-- [ ] 1b — App `comptes` : utilisateur personnalisé (connexion par email) + tests
-- [ ] 1c — Inscription / connexion / déconnexion (vues d'auth intégrées de Django)
-- [ ] 1d — Tous les modèles (entreprises, stock, ventes, dépenses, business plan) + admin + tests
+- [x] 1a — Création du projet + GitHub (dossier local `C:\Users\Blaise\gestion-entrepreneurs`)
+- [x] 1b — App `comptes` : utilisateur personnalisé (connexion par email) + 10 tests
+- [x] 1c — Tailwind v4.3.5 (CLI autonome) + gabarit de base mobile + page d'accueil (app `tableau_de_bord`) + .gitattributes — 13 tests
+- [ ] **1d — Inscription / connexion / déconnexion — 26 tests** ← en cours (branche `feature/authentification`)
 - [ ] 1e — Déploiement Render + Neon (service créé à la main, sans Blueprint)
+- [ ] 1f et suivantes — Modèles entreprises, stock, ventes, dépenses, business plan + admin + tests
+
+Note : une copie de ce fichier existe aussi dans le dépôt (`docs/ETAT_DU_PROJET.md`).
+
+## Points ouverts (à décider plus tard)
+- Limitation des tentatives de connexion (anti force brute) : pas encore en place.
+- Réinitialisation du mot de passe par email : nécessite un service d'envoi d'emails gratuit sans carte.
 
 ## Stack retenue
 - Python 3.14 (pas 3.15 : trop récent, Django 6.1 et certains paquets ne le supportent pas encore officiellement)
-- Django 6.1, django-environ, WhiteNoise, gunicorn, psycopg
+- Django 6.1.3, django-environ, WhiteNoise, gunicorn, psycopg
 - SQLite en local, PostgreSQL Neon en production, Render (offre gratuite, sans carte)
-- Templates + Tailwind (CLI autonome, sans Node ni CDN) + HTMX + Chart.js (seulement sur le tableau de bord)
+- Templates + Tailwind v4 (exécutable autonome `tailwindcss.exe`, non commité ; CSS compilé et minifié `static/css/app.css` commité) + HTMX + Chart.js (seulement sur le tableau de bord)
+- Fins de ligne : LF partout via `.gitattributes`
 - GitHub : milliardongumbi18/gestion-entrepreneurs
 
 ## Décisions validées
@@ -26,9 +34,12 @@ _Dernière mise à jour : 18 novembre 2026_
 6. On n'efface jamais une vente (statut « annulée », stock remis) ni un produit vendu (`actif=False`, `PROTECT`).
 7. Prix copiés dans `LigneVente` au moment de la vente. Numéro de vente unique par entreprise (`V-2026-00042`).
 8. Business plan : champs texte explicites par section + `PrevisionAnnuelle` (années 1 à 3).
+9. Utilisateur : `AbstractUser` sans `username`, connexion par email, email stocké en minuscules (unicité insensible à la casse).
+10. Authentification : vues intégrées de Django (`LoginView`, `LogoutView` en POST uniquement), inscription maison avec connexion automatique. URLs sous `/comptes/`.
 
 ## Apps
 `comptes`, `entreprises`, `stock`, `ventes`, `depenses`, `businessplan`, `tableau_de_bord` (sans modèle).
+Règle : toujours `startapp` AVANT d'ajouter l'app dans `INSTALLED_APPS`.
 
 ## Méthode de travail (résumé)
 - Claude code tout et explique ; pas d'exercices. Moi : j'applique, teste, déploie, signale les erreurs.
