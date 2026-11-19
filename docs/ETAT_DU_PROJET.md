@@ -7,11 +7,17 @@ _Dernière mise à jour : 19 novembre 2026_
 - [x] 1a — Création du projet + GitHub (dossier local `C:\Users\Blaise\gestion-entrepreneurs`)
 - [x] 1b — App `comptes` : utilisateur personnalisé (connexion par email) + 10 tests
 - [x] 1c — Tailwind v4.3.5 (CLI autonome) + gabarit de base mobile + page d'accueil (app `tableau_de_bord`) + .gitattributes — 13 tests
-- [ ] **1d — Inscription / connexion / déconnexion — 26 tests** ← en cours (branche `feature/authentification`)
-- [ ] 1e — Déploiement Render + Neon (service créé à la main, sans Blueprint)
+- [x] 1d — Inscription / connexion / déconnexion — 26 tests
+- [ ] **1e — Déploiement Render (Frankfurt, Free) + Neon (Frankfurt, Free)** ← en cours (branche `feature/deploiement-render`)
 - [ ] 1f et suivantes — Modèles entreprises, stock, ventes, dépenses, business plan + admin + tests
 
 Note : une copie de ce fichier existe aussi dans le dépôt (`docs/ETAT_DU_PROJET.md`).
+
+## Déploiement
+- Build : `bash build.sh` (pip install, collectstatic, migrate). Start : `gunicorn config.wsgi:application`.
+- Variables Render : PYTHON_VERSION, SECRET_KEY (différente du local), DEBUG=False, DATABASE_URL (Neon). RENDER_EXTERNAL_HOSTNAME est fourni par Render.
+- Pas de Shell sur l'offre gratuite Render : commandes ponctuelles (createsuperuser) lancées depuis le PC avec DATABASE_URL de Neon saisie via Read-Host.
+- Source Tailwind déplacée dans `tailwind/entree.css` (hors de `static/`) : sinon collectstatic en production échoue sur `@import "tailwindcss"`.
 
 ## Points ouverts (à décider plus tard)
 - Limitation des tentatives de connexion (anti force brute) : pas encore en place.
@@ -46,3 +52,4 @@ Règle : toujours `startapp` AVANT d'ajouter l'app dans `INSTALLED_APPS`.
 - Rythme « molo molo », étapes découpées (1a, 1b…). Hors périmètre ou délai rallongé → le dire avant de coder.
 - Format de chaque étape : 🎯 Objectif + branche → 🗺 Fichiers → 📁 Code complet avec chemin → ▶️ Commandes PowerShell → ✅ Vérification (check, tests avec nombre attendu, navigateur) → 🔀 Commit / PR / déploiement / nettoyage → 📌 À retenir → ⏭️ Prochaine étape.
 - Contraintes : aucun service exigeant une carte bancaire ; utilisateurs sur téléphone avec données mobiles chères.
+- Astuces Windows : afficher les extensions de fichiers ; Enregistrement automatique dans VS Code ; coller les commandes une par une.

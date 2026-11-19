@@ -3,23 +3,31 @@
 {% block titre %}Connexion — Gestion Entrepreneurs{% endblock %}
 
 {% block contenu %}
-<div class="mx-auto max-w-md rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-  <h1 class="text-xl font-bold text-slate-900">Connexion</h1>
+<div class="relative isolate mx-auto max-w-md">
+  <div class="pointer-events-none absolute -top-10 -left-12 -z-10 size-56 rounded-full bg-marque-300/40 blur-3xl animate-flotte" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -right-12 -bottom-10 -z-10 size-56 rounded-full bg-soleil-300/50 blur-3xl animate-flotte [animation-delay:-6s]" aria-hidden="true"></div>
 
-  <form method="post" class="mt-6 space-y-4">
-    {% csrf_token %}
-    {% include "comptes/_champs.html" %}
-    {# Page demandée avant la connexion : Django vérifie qu'elle reste sur notre site #}
-    <input type="hidden" name="next" value="{{ next }}">
-    <button type="submit"
-            class="w-full rounded-lg bg-emerald-700 px-4 py-3 font-semibold text-white hover:bg-emerald-800">
-      Se connecter
-    </button>
-  </form>
+  <div class="carte animate-apparition overflow-hidden">
+    {# Fine bande dégradée aux couleurs de la marque #}
+    <div class="h-1.5 bg-linear-to-r from-marque-600 via-marque-400 to-soleil-400"></div>
 
-  <p class="mt-4 text-center text-sm text-slate-600">
-    Pas encore de compte ?
-    <a href="{% url 'comptes:inscription' %}" class="font-medium text-emerald-700 underline">Créer un compte</a>
-  </p>
+    <div class="p-6 sm:p-8">
+      <h1 class="text-2xl font-extrabold text-slate-900">Bon retour 👋</h1>
+      <p class="mt-1 text-sm text-slate-600">Connectez-vous pour retrouver votre commerce.</p>
+
+      <form method="post" class="mt-6 space-y-5">
+        {% csrf_token %}
+        {% include "comptes/_champs.html" %}
+        {# Page demandée avant la connexion : Django vérifie qu'elle reste sur notre site #}
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="bouton-principal w-full">Se connecter</button>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-slate-600">
+        Pas encore de compte ?
+        <a href="{% url 'comptes:inscription' %}" class="font-semibold text-marque-700 underline-offset-4 hover:underline">Créer un compte</a>
+      </p>
+    </div>
+  </div>
 </div>
 {% endblock %}
