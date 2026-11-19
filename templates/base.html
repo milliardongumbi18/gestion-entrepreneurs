@@ -5,31 +5,48 @@
   <meta charset="utf-8">
   {# Indispensable sur téléphone : sans cette ligne, la page s'affiche en tout petit #}
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {# Colore la barre d'adresse de Chrome sur Android aux couleurs de l'application #}
+  <meta name="theme-color" content="#1a35b2">
   <title>{% block titre %}Gestion Entrepreneurs{% endblock %}</title>
+  {# Icône d'onglet en SVG intégré : aucun fichier à télécharger #}
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%231f43dc'/%3E%3Cpath d='M5 16l4.5-4.5 3.5 2.5 6-7' fill='none' stroke='%23ffcf4a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
 </head>
-<body class="flex min-h-screen flex-col bg-slate-50 text-slate-800 antialiased">
+<body class="relative isolate flex min-h-screen flex-col bg-slate-50 font-sans text-slate-800 antialiased selection:bg-soleil-300 selection:text-marque-950">
 
-  <header class="bg-emerald-700 text-white">
-    <div class="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
-      <a href="{% url 'tableau_de_bord:accueil' %}" class="text-lg font-semibold">
-        Gestion Entrepreneurs
+  {# Léger dégradé bleuté en haut de toutes les pages #}
+  <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-linear-to-b from-marque-100/70 to-transparent" aria-hidden="true"></div>
+
+  <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/75 backdrop-blur-lg">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+
+      <a href="{% url 'tableau_de_bord:accueil' %}" class="group flex items-center gap-2.5" aria-label="Gestion Entrepreneurs — accueil">
+        <span class="grid size-9 place-items-center rounded-xl bg-linear-to-br from-marque-500 to-marque-800 text-soleil-400 shadow-md shadow-marque-600/30 transition duration-300 group-hover:-rotate-6 group-hover:scale-105">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+            <path d="M4 17l5-5 4 3 7-8"/>
+            <circle cx="20" cy="7" r="1.4" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="hidden text-lg font-bold tracking-tight text-slate-900 sm:inline">
+          Gestion <span class="text-marque-600">Entrepreneurs</span>
+        </span>
       </a>
 
-      <nav class="flex items-center gap-3 text-sm">
+      <nav class="flex items-center gap-1.5 text-sm">
         {% if user.is_authenticated %}
-          <span class="hidden sm:inline">{{ user.email }}</span>
+          <span class="mr-1 hidden items-center gap-2 sm:flex">
+            <span class="grid size-8 place-items-center rounded-full bg-marque-100 font-bold text-marque-700">{{ user.email|first|upper }}</span>
+            <span class="text-slate-600">{{ user.email }}</span>
+          </span>
           {# Déconnexion en POST : un simple lien (GET) pourrait être déclenché par un site malveillant #}
           <form method="post" action="{% url 'comptes:deconnexion' %}">
             {% csrf_token %}
-            <button type="submit" class="rounded-lg bg-white/15 px-3 py-1.5 font-medium hover:bg-white/25">
-              Déconnexion
-            </button>
+            <button type="submit" class="bouton-discret">Déconnexion</button>
           </form>
         {% else %}
-          <a href="{% url 'comptes:connexion' %}" class="hover:underline">Connexion</a>
+          <a href="{% url 'comptes:connexion' %}" class="bouton-discret">Connexion</a>
           <a href="{% url 'comptes:inscription' %}"
-             class="rounded-lg bg-white px-3 py-1.5 font-medium text-emerald-800">
+             class="inline-flex items-center rounded-xl bg-marque-600 px-4 py-2 font-semibold text-white shadow-md shadow-marque-600/25 transition duration-200 hover:-translate-y-0.5 hover:bg-marque-700">
             Créer un compte
           </a>
         {% endif %}
@@ -38,22 +55,36 @@
   </header>
 
   {% if messages %}
-    <div class="mx-auto w-full max-w-5xl space-y-2 px-4 pt-4">
+    <div class="mx-auto w-full max-w-6xl space-y-2 px-4 pt-5">
       {% for message in messages %}
-        <p role="alert"
-           class="rounded-lg border px-4 py-3 text-sm {% if message.tags == 'error' %}border-red-200 bg-red-50 text-red-800{% else %}border-emerald-200 bg-emerald-50 text-emerald-800{% endif %}">
-          {{ message }}
-        </p>
+        <div role="alert"
+             class="flex animate-apparition items-start gap-3 rounded-2xl border px-4 py-3 text-sm font-medium shadow-sm
+                    {% if message.tags == 'error' %}border-rose-200 bg-rose-50 text-rose-800
+                    {% elif message.tags == 'warning' %}border-soleil-300 bg-soleil-300/30 text-marque-950
+                    {% elif message.tags == 'success' %}border-emerald-200 bg-emerald-50 text-emerald-800
+                    {% else %}border-marque-200 bg-marque-50 text-marque-800{% endif %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 size-5 shrink-0" aria-hidden="true">
+            {% if message.tags == 'error' or message.tags == 'warning' %}
+              <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+            {% else %}
+              <circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/>
+            {% endif %}
+          </svg>
+          <p>{{ message }}</p>
+        </div>
       {% endfor %}
     </div>
   {% endif %}
 
-  <main class="mx-auto w-full max-w-5xl flex-1 px-4 py-6">
+  <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
     {% block contenu %}{% endblock %}
   </main>
 
-  <footer class="border-t border-slate-200 py-4 text-center text-xs text-slate-500">
-    © {% now "Y" %} Gestion Entrepreneurs — Kinshasa
+  <footer class="mt-16 border-t border-slate-200 bg-white/60">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-6 text-xs text-slate-500 sm:flex-row">
+      <p>© {% now "Y" %} Gestion Entrepreneurs</p>
+      <p>Fait à Kinshasa · CDF &amp; USD</p>
+    </div>
   </footer>
 </body>
 </html>

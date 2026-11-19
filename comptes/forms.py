@@ -8,12 +8,9 @@ from django.contrib.auth.forms import (
 
 from .models import Utilisateur
 
-# Classes Tailwind communes à tous les champs.
-# text-base (16 px) empêche l'iPhone de zoomer automatiquement sur le champ.
-CLASSES_CHAMP = (
-    "mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-base "
-    "focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
-)
+# Classe « champ » définie une seule fois dans tailwind/entree.css (@utility).
+# Elle utilise text-base (16 px) : l'iPhone ne zoome pas automatiquement sur le champ.
+CLASSES_CHAMP = "champ"
 
 
 class ChampsStylesMixin:

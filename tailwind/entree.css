@@ -1,5 +1,94 @@
 /* Fichier source Tailwind : compilé vers static/css/app.css.
-   Il est volontairement HORS de static/ : collectstatic ne doit pas le traiter.
-   source("../") indique de scanner tout le projet à partir de la racine
-   (en ignorant ce qui est dans .gitignore, comme .venv). */
+   Il est volontairement HORS de static/ : collectstatic ne doit pas le traiter. */
 @import "tailwindcss" source("../");
+
+/* ------------------------------------------------------------------
+   1. Identité visuelle (« design tokens »)
+   Chaque variable --color-xxx crée les classes bg-xxx, text-xxx, etc.
+   ------------------------------------------------------------------ */
+@theme {
+  /* Polices du système : zéro octet à télécharger */
+  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Bleu Congo : couleur principale (confiance, sérieux) */
+  --color-marque-50: #eef4ff;
+  --color-marque-100: #dbe6ff;
+  --color-marque-200: #bcd0ff;
+  --color-marque-300: #8eb0ff;
+  --color-marque-400: #5a85fb;
+  --color-marque-500: #335ff2;
+  --color-marque-600: #1f43dc;
+  --color-marque-700: #1a35b2;
+  --color-marque-800: #1b308c;
+  --color-marque-900: #1b2d6f;
+  --color-marque-950: #121b43;
+
+  /* Jaune soleil : accent (énergie, l'argent qui rentre) */
+  --color-soleil-300: #ffe08a;
+  --color-soleil-400: #ffcf4a;
+  --color-soleil-500: #f5b70a;
+  --color-soleil-600: #d99400;
+
+  /* Animations : uniquement transform et opacity (fluides même sur un petit téléphone) */
+  --animate-apparition: apparition 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-flotte: flotte 14s ease-in-out infinite;
+  --animate-pousse: pousse 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes apparition {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes flotte {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(28px, -22px) scale(1.1); }
+  }
+  @keyframes pousse {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+  }
+}
+
+/* ------------------------------------------------------------------
+   2. Composants réutilisables : une seule définition, utilisée partout
+   ------------------------------------------------------------------ */
+@utility bouton-principal {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-marque-600 px-5 py-3
+         font-semibold text-white shadow-lg shadow-marque-600/25 transition duration-200
+         hover:-translate-y-0.5 hover:bg-marque-700 hover:shadow-xl hover:shadow-marque-600/30
+         active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-marque-300;
+}
+
+@utility bouton-soleil {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-soleil-400 px-6 py-3.5
+         font-semibold text-marque-950 shadow-lg shadow-soleil-500/30 transition duration-200
+         hover:-translate-y-0.5 hover:bg-soleil-300 hover:shadow-xl
+         active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-soleil-300/60;
+}
+
+@utility bouton-discret {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-3.5 py-2 font-semibold
+         text-slate-700 transition duration-200 hover:bg-slate-100 hover:text-marque-700
+         focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-marque-200;
+}
+
+@utility champ {
+  @apply mt-1.5 block w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base
+         text-slate-900 shadow-sm transition duration-200 placeholder:text-slate-400
+         hover:border-slate-400 focus:border-marque-500 focus:outline-none focus:ring-4 focus:ring-marque-500/15;
+}
+
+@utility carte {
+  @apply rounded-3xl bg-white shadow-xl shadow-marque-900/5 ring-1 ring-slate-200/80;
+}
+
+/* ------------------------------------------------------------------
+   3. Accessibilité : si l'utilisateur a demandé à son téléphone de
+   réduire les animations, on les coupe toutes.
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
