@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block titre %}Accueil — Gestion Entrepreneurs{% endblock %}
+
+{% block contenu %}
+<section class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-10">
+  <h1 class="text-2xl font-bold text-slate-900 sm:text-3xl">
+    Gérez votre commerce simplement
+  </h1>
+  <p class="mt-3 text-slate-600">
+    Stock, ventes, dépenses et bénéfice en CDF et en USD, depuis votre téléphone.
+    Préparez aussi votre business plan à partir de vos vrais chiffres.
+  </p>
+
+  <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+    <li class="rounded-lg bg-emerald-50 p-4 text-emerald-900">📦 Stock et alertes de rupture</li>
+    <li class="rounded-lg bg-emerald-50 p-4 text-emerald-900">🧾 Ventes, factures et reçus PDF</li>
+    <li class="rounded-lg bg-emerald-50 p-4 text-emerald-900">💸 Dépenses par catégorie</li>
+    <li class="rounded-lg bg-emerald-50 p-4 text-emerald-900">📈 Tableau de bord et business plan</li>
+  </ul>
+</section>
+{% endblock %}

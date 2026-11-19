@@ -16,3 +16,6 @@ media/
 
 # Éditeur
 .vscode/
+
+# Exécutable Tailwind (chacun le télécharge, trop lourd pour Git)
+tailwindcss.exe

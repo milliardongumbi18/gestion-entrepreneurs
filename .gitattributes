@@ -1,0 +1,10 @@
+# Fins de ligne Unix (LF) partout : indispensable pour les scripts exécutés sur Render (Linux)
+* text=auto eol=lf
+
+# Fichiers binaires : Git ne doit jamais les modifier
+*.exe binary
+*.png binary
+*.jpg binary
+*.ico binary
+*.pdf binary
+*.woff2 binary
